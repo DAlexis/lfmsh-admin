@@ -3,6 +3,7 @@ services:
         image: muccg/devpi:latest
         volumes:
          - devpisrv-data:/data
+        user: "${UID}:${GID}"
         ports:
          - 3141:3141
         environment:
@@ -24,8 +25,8 @@ services:
         volumes:
          - 'openldap-data:/bitnami/openldap'
         restart: always
-        profiles:
-         - donotstart
+        #profiles:
+        # - donotstart
 
     phpldapadmin:
         image: osixia/phpldapadmin:0.9.0
@@ -35,8 +36,8 @@ services:
          - PHPLDAPADMIN_LDAP_HOSTS=${SERVER_IP}
          #- PHPLDAPADMIN_HTTPS=false
         restart: always
-        profiles:
-         - donotstart
+        #profiles:
+        # - donotstart
 
     apt_cacher_ng:
         image: sameersbn/apt-cacher-ng:3.7.4-20220421
@@ -45,8 +46,8 @@ services:
         volumes:
          - apt-cacher-ng:/var/cache/apt-cacher-ng
         restart: always
-        profiles:
-         - donotstart
+        #profiles:
+        # - donotstart
 
 
 volumes:
