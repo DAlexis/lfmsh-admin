@@ -1,5 +1,0 @@
-devpi-server>=6.5.0
-devpi-web>=4.0.8
-devpi-client>=5.2.3
-python-dotenv>=0.20.0
-PyYAML>=6.0

@@ -15,4 +15,4 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: './volumes/portainer_data'
+      device: '../volumes/portainer_data'

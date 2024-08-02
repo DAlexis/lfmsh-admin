@@ -1,10 +1,12 @@
 services:
     devpisrv:
-        build: /home/abulatov/Projects/lfmsh-admin/computer-class-server/pypimirror
-        ports:
-         - "${SERVER_IP:-0.0.0.0}:${DEVPISRV_PORT:-3141}:3141"
+        image: muccg/devpi:latest
         volumes:
-         - devpisrv-data:/var/local/devpisrv
+         - devpisrv-data:/data
+        ports:
+         - 3141:3141
+        environment:
+         - DEVPI_PASSWORD=
         restart: always
         #profiles:
         # - donotstart
@@ -15,12 +17,15 @@ services:
          - '389:1389'
          - '636:1636'
         environment:
-         - LDAP_ADMIN_USERNAME=admin
-         - LDAP_ADMIN_PASSWORD=adminpassword
+         - LDAP_ADMIN_USERNAME=${LDAP_ADMIN_USERNAME}
+         - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
          - LDAP_USERS=user01,user02
          - LDAP_PASSWORDS=password1,password2
         volumes:
          - 'openldap-data:/bitnami/openldap'
+        restart: always
+        profiles:
+         - donotstart
 
     phpldapadmin:
         image: osixia/phpldapadmin:0.9.0
@@ -30,6 +35,8 @@ services:
          - PHPLDAPADMIN_LDAP_HOSTS=${SERVER_IP}
          #- PHPLDAPADMIN_HTTPS=false
         restart: always
+        profiles:
+         - donotstart
 
     apt_cacher_ng:
         image: sameersbn/apt-cacher-ng:3.7.4-20220421
@@ -37,6 +44,9 @@ services:
          - 3142:3142
         volumes:
          - apt-cacher-ng:/var/cache/apt-cacher-ng
+        restart: always
+        profiles:
+         - donotstart
 
 
 volumes:
